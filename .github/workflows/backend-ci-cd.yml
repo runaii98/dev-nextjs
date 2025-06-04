@@ -88,4 +88,4 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/run-ai-backend:latest
             docker-compose down
             docker-compose up -d
-            docker image prune -f 
+            docker image prune -f
