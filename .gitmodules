@@ -1,0 +1,4 @@
+[submodule "final-frontend-design"]
+	path = final-frontend-design
+	url = https://github.com/runaii98/run-ai-frontend.git
+	branch = run-ai 
