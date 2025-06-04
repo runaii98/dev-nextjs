@@ -13,7 +13,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        
+        with:
+          submodules: recursive
+          token: ${{ secrets.GH_PAT }}
+          
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -48,6 +51,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          token: ${{ secrets.GH_PAT }}
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -64,10 +70,10 @@ jobs:
           context: ./final-frontend-design
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/run-ai:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/run-ai:${{ github.sha }}
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/run-ai:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/run-ai:buildcache,mode=max
+            ${{ secrets.DOCKERHUB_USERNAME }}/runaii:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/runaii:${{ github.sha }}
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/runaii:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/runaii:buildcache,mode=max
 
   deploy:
     needs: docker-build-push
@@ -82,8 +88,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /opt/run-ai
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/run-ai:latest
+            cd /opt/runaii
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/runaii:latest
             docker-compose down
             docker-compose up -d
             docker image prune -f
