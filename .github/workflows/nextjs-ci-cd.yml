@@ -1,5 +1,7 @@
 name: Next.js CI/CD Pipeline
 
+# Workflow for building and deploying the Next.js frontend
+
 on:
   push:
     branches: [ main ]
